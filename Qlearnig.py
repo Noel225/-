@@ -86,6 +86,6 @@ ani = FuncAnimation(
 )
 
 # 動画ファイルとして保存（MP4形式）
-ani.save("path/QLearning.mp4", writer="ffmpeg", fps=30)
+ani.save("path/QLearning.mp4", writer="ffmpeg", fps=30) #保存したいパス先を入力
 
 plt.show()
