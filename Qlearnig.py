@@ -30,8 +30,8 @@ def step(state, action):
         next_state = state  # 範囲外なら元の位置に戻る
     return next_state, reward, done
 
-# エージェントの動きを記録するリスト
-agent_positions = []
+# ロボットの動きを記録するリスト
+robot_positions = []
 
 # 学習プロセス
 for episode in range(episodes):
@@ -58,7 +58,7 @@ for episode in range(episodes):
         # 状態を更新
         state = next_state
         episode_positions.append(state)
-    agent_positions.append(episode_positions)
+    robot_positions.append(episode_positions)
 
 # アニメーションの作成
 fig, ax = plt.subplots()
@@ -66,7 +66,7 @@ ax.set_xlim(-10, 10)
 ax.set_ylim(-1, 1)
 ax.axhline(0, color="black", linewidth=0.5)  # 数値線
 ax.scatter(goal_state, 0, color="green", label="Goal", s=100)  # ゴール
-agent_dot, = ax.plot([], [], "ro", label="Agent")  # エージェント
+agent_dot, = ax.plot([], [], "ro", label="Robot")  # ロボット
 ax.legend()
 
 def init():
@@ -74,18 +74,18 @@ def init():
     return agent_dot,
 
 def update(frame):
-    x = frame  # エージェントの位置
-    agent_dot.set_data(x, 0)  # 数値線上のエージェント
+    x = frame  # ロボットの位置
+    agent_dot.set_data(x, 0)  # 数値線上のロボット
     return agent_dot,
 
-# エージェントの全エピソードの動きをつなげる
-flattened_positions = [pos for episode in agent_positions for pos in episode]
+# ロボットの全エピソードの動きをつなげる
+flattened_positions = [pos for episode in robot_positions for pos in episode]
 
 ani = FuncAnimation(
     fig, update, frames=flattened_positions, init_func=init, blit=True, interval=200
 )
 
 # 動画ファイルとして保存（MP4形式）
-ani.save("path/aaa.mp4", writer="ffmpeg", fps=30)
+ani.save("path/QLearning.mp4", writer="ffmpeg", fps=30)
 
 plt.show()
